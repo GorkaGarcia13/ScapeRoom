@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PortalCamera : MonoBehaviour {
 
-	public Transform playerCamera, portal, otherPortal;
+	public Transform portal, otherPortal;
+
+	private Transform playerCamera;
 
 
 	// Use this for initialization
 	void Start () {
-		
+		playerCamera = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Camera>().transform;
 	}
 	
 	// Update is called once per frame
