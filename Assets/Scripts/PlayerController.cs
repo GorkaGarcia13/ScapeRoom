@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
 		x = Input.GetAxis("Horizontal") * velocity;
 		z = Input.GetAxis("Vertical") * velocity;
 		//Vector3 oldVel = 
-		Vector3 mov = new Vector3(x, gravity, z);
+		Vector3 mov = new Vector3(x, 0, z);
 		controller.Move(transform.TransformDirection(mov));
 
 		float v, h;
