@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour {
 
 	public float velocity, jump, rotation, maxFloorSlope;
 
-	private bool canJump;
+	private bool canJump = true;
+
+	private AudioSource mAudio;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 		body = GetComponent<Rigidbody> ();
 		cam = transform.GetChild (0);
 		Cursor.lockState = CursorLockMode.Locked;
+		mAudio = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 		y = oldVel.y;
 
 
-		if (Input.GetKeyDown ("space")) {
+		if (Input.GetKeyDown ("space") && canJump) {
 			//body.AddForce (Vector3.up * jump, ForceMode.Impulse);
 			canJump = false;
 			y = jump;
@@ -54,12 +57,21 @@ public class PlayerController : MonoBehaviour {
 		transform.Rotate(new Vector3(0, h, 0));
 		cam.Rotate(new Vector3(-v, 0, 0));
 
+		if (body.velocity.magnitude > 1 && !mAudio.isPlaying) {
+			mAudio.Play ();
+		} else if (body.velocity.magnitude <= 1){
+			mAudio.Stop ();
+		}
 	}
 
 	void OnCollisionEnter(Collision other){
+		//print ("COLLISION");
 		foreach (ContactPoint contactPoint in other.contacts) {
-			if (Vector3.Angle (contactPoint.normal, Vector3.down) < maxFloorSlope)
+			//print ("AAA");
+			//print (Vector3.Angle (contactPoint.normal, Vector3.up) );
+			if (Vector3.Angle (contactPoint.normal, Vector3.up) < maxFloorSlope) {
 				canJump = true;
+			}
 		}
 	}
 }

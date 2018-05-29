@@ -11,7 +11,7 @@ public class ManagerLvl : MonoBehaviour {
 	}
 	
 	public void StartGame(){
-		SceneManager.LoadScene ("Game");
+		SceneManager.LoadScene ("Complete");
 	}
 	public void ExitGame(){
 		Application.Quit();
