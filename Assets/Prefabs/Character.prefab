@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 54937568631591010}
   - component: {fileID: 136034287569290778}
   - component: {fileID: 114542652704074270}
+  - component: {fileID: 114662348797919194}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -196,7 +197,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1542472418422440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81c9795a96c094f4cbde4d65546aa9b2, type: 3}
   m_Name: 
@@ -249,6 +250,22 @@ MonoBehaviour:
     slowDownRate: 20
     airControl: 0
     shellOffset: 0
+--- !u!114 &114662348797919194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542472418422440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20abdfc140d9f3b45add107b80ec71b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  velocity: 0
+  jump: 0
+  rotation: 0
+  maxFloorSlope: 0
 --- !u!136 &136034287569290778
 CapsuleCollider:
   m_ObjectHideFlags: 1

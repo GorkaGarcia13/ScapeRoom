@@ -5,33 +5,61 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	private CharacterController controller;
-	public Transform cam;
+	private Transform cam;
 
-	//private Rigidbody
+	private Rigidbody body;
 
-	public float velocity, rotation, gravity;
+	public float velocity, jump, rotation, maxFloorSlope;
+
+	private bool canJump;
 
 	// Use this for initialization
 	void Start () {
 		controller = GetComponent<CharacterController>();
+		body = GetComponent<Rigidbody> ();
+		cam = transform.GetChild (0);
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float z, x;
+		float z, x, y;
 
-		x = Input.GetAxis("Horizontal") * velocity;
-		z = Input.GetAxis("Vertical") * velocity;
+		Vector3 oldVel = body.velocity;
+
+		x = Input.GetAxis("Horizontal") * velocity * Time.deltaTime;
+		z = Input.GetAxis("Vertical") * velocity * Time.deltaTime;
+		y = oldVel.y;
+
+
+		if (Input.GetKeyDown ("space")) {
+			//body.AddForce (Vector3.up * jump, ForceMode.Impulse);
+			canJump = false;
+			y = jump;
+		}
 		//Vector3 oldVel = 
-		Vector3 mov = new Vector3(x, 0, z);
-		controller.Move(transform.TransformDirection(mov));
+		Vector3 mov = new Vector3(x, y, z);
+		//controller.SimpleMove(transform.TransformDirection(mov * velocity));
+		//controller.Move
+
+		body.velocity = transform.TransformDirection(mov);
 
 		float v, h;
 
 		h = Input.GetAxis("Mouse X") * rotation;
 		v = Input.GetAxis("Mouse Y") * rotation;
 
+		body.angularVelocity = Vector3.zero;
+
 		transform.Rotate(new Vector3(0, h, 0));
 		cam.Rotate(new Vector3(-v, 0, 0));
+
+	}
+
+	void OnCollisionEnter(Collision other){
+		foreach (ContactPoint contactPoint in other.contacts) {
+			if (Vector3.Angle (contactPoint.normal, Vector3.down) < maxFloorSlope)
+				canJump = true;
+		}
 	}
 }
